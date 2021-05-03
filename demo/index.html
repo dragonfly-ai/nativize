@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="application/javascript" src="../target/scala-2.13/nativize-opt.js"></script>
+  <meta charset="UTF-8">
+  <title>Nativize Demo</title>
+</head>
+<body>
+<h1>nativize Demo</h1><br />
+<h2>Scala.JS Demo Application Output:</h2>
+<div style="width: 50%; float:left;">Console:<br /><pre id="app" style="background-color: #222222; color: #88FFFF; padding:16px; width: 90%; height: 50%; max-height: 600px; overflow-y: scroll; overflow: scroll;"></pre></div>
+<div style="width: 50%; float:right;">Errors:<br /><pre id="err" style="background-color: #222222; color: #EEFF00; padding:16px; width: 80%; height: 50%; max-height: 600px; overflow-y: scroll; overflow: scroll;"></pre></div>
+<script type="application/javascript">
+var print = console.log
+var error = console.error
+
+console.error = (function(){
+  var err = document.getElementById("err");
+  return function(s) {
+    err.innerHTML = err.innerHTML + "<br />" + s;
+    error(s);
+  }
+})();
+
+// write console output to div
+console.log = (function(){
+  var app = document.getElementById("app");
+  return function(s) {
+    app.innerHTML = app.innerHTML + "<br />" + s;
+    print(s);
+  }
+})();
+
+console.log("var v0 = demo.Vec3(1, 2, 3)")
+var v0 = demo.Vec3(1, 2, 3)
+console.log("var v1 = demo.Vec3(4, 5, 6)")
+var v1 = demo.Vec3(4, 5, 6)
+console.log("var sum = demo.Vec3.add(v0, v1)")
+var sum = demo.Vec3.add(v0, v1)
+console.log("sum.toString() -> " + sum.toString())
+console.log("demo.Vec3.normalize(sum).toString() -> " + demo.Vec3.normalize(sum).toString())
+</script>
+</body>
+</html>
